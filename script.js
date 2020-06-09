@@ -58,6 +58,7 @@ function timeSlot(p) {
     var inputColumn = $('<input>')
     inputColumn.attr('id', p);
     inputColumn.addClass("col-md-8 description " + inputClassname);
+    inputColumn.val(getDescriptionForTimeSlot("", p));
     row.append(inputColumn);
 
     
@@ -69,27 +70,30 @@ function timeSlot(p) {
 
 }
 
-$(document).on('click', '.saveBtn', function(){
+function  getDescriptionForTimeSlot(day, hour){
+    var storage = localStorage.getItem('get');
+    
+    storage = JSON.parse(storage);
+    var slotDescription  =  storage[hour];
+    if(hour == undefined){
+        return "";
+    }
+    return  slotDescription;
+}
+
+$(document).on('click', '.saveBtn', function(event){
+
+    event.preventDefault();
+    event.stopPropagation();
+    hourClicked = $(this).attr('hour');
+    userInput = $('#' + hourClicked).val();
+   
     
     var get = localStorage.getItem('get');
-
-    
-
-     hourClicked = $(this).attr('hour');
-     userInput = $('#' + hourClicked).val()
-     userInput.textContent = get;
-    
-    localStorage.setItem("get", JSON.stringify(userInput));
-
-    console.log(localStorage.setItem("get", JSON.stringify(userInput)));
-
-    console.log(userInput);
-    
-    console.log(localStorage.getItem("get"));
-    
-    console.log('this is the horu we clicked!', $(this).attr('hour'))
-    
-    console.log('this is what htey typed for tha thour!!', $('#' + hourClicked).val())
+    get = JSON.parse(get);
+    get[hourClicked] = userInput;
+   localStorage.setItem("get", JSON.stringify(get));
+   
 });
 
 
