@@ -26,6 +26,7 @@ $(document).ready(function () {
 function timeSlot(p) {
 
     var present = moment().hour()
+    present = JSON.stringify(present)
     console.log('this is present! hour!', present)
     console.log('this is the hpur of row we r building!!', p)
     var inputClassname = ''
