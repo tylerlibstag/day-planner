@@ -73,6 +73,7 @@ function  getDescriptionForTimeSlot(day, hour){
     
     storage = JSON.parse(storage);
     var slotDescription  =  storage[hour];
+    
     if(hour == undefined){
         return "";
     }
