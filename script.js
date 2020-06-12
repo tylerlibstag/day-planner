@@ -1,6 +1,3 @@
-
-
-
 $(document).ready(function () {
 
     var curDate = moment().format("dddd, MMMM Do YYYY, h:mm a");
@@ -95,9 +92,3 @@ $(document).on('click', '.saveBtn', function(event){
    localStorage.setItem("get", JSON.stringify(get));
    
 });
-
-
-
-
-
-
