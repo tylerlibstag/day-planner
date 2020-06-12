@@ -3,44 +3,40 @@ $(document).ready(function () {
     var curDate = moment().format("dddd, MMMM Do YYYY, h:mm a");
     $("#currentDay").html(curDate);
 
-
-
     for (var hour = 9; hour < 18; hour++) {
-
-        if(hour > 12){
-            var formattedHour = hour - 12;
-            timeSlot(formattedHour + 'pm' );
-        }
-        else {
-            timeSlot(hour + 'am');
-        }
-        
-
-       
-
+        timeSlot(hour);
     }
-
-
 });
 
 function timeSlot(p) {
 
-    var present = moment().hour()
-    present = JSON.stringify(present)
-    console.log('this is present! hour!', present)
-    console.log('this is the hpur of row we r building!!', p)
+
+    var present = parseInt(moment().hour())
+
+
     var inputClassname = ''
-    if(p > present){
+    if (p > present) {
         inputClassname = 'future';
-        //console.log(p,"future");
+       
     }
-    else if(p == present){
+    else if (p == present) {
         inputClassname = 'present';
-       // console.log(p,"past")
+        
     }
-    else{
+    else {
         inputClassname = 'past';
     }
+
+
+
+    if (p > 12) {
+        var formattedHour = p - 12;
+        p = (formattedHour + 'pm');
+    }
+    else {
+        p = (p + 'am');
+    }
+
 
 
     var row = $('<div>').attr('hour', p);
@@ -59,7 +55,7 @@ function timeSlot(p) {
     inputColumn.val(getDescriptionForTimeSlot("", p));
     row.append(inputColumn);
 
-    
+
     var saveColumn = $('<button>').attr('id', 'icon');
     saveColumn.attr('hour', p);
     saveColumn.addClass("col-md-2 far fa-save fa-2x saveBtn");
@@ -68,29 +64,34 @@ function timeSlot(p) {
 
 }
 
-function  getDescriptionForTimeSlot(day, hour){
+function getDescriptionForTimeSlot(day, hour) {
     var storage = localStorage.getItem('get');
-    
+    if (storage == undefined){
+        return '';
+    }
     storage = JSON.parse(storage);
-    var slotDescription  =  storage[hour];
-    
-    if(hour == undefined){
+    var slotDescription = storage[hour];
+
+    if (hour == undefined) {
         return "";
     }
-    return  slotDescription;
+    return slotDescription;
 }
 
-$(document).on('click', '.saveBtn', function(event){
+$(document).on('click', '.saveBtn', function (event) {
 
     event.preventDefault();
     event.stopPropagation();
     hourClicked = $(this).attr('hour');
     userInput = $('#' + hourClicked).val();
-   
-    
+
+
     var get = localStorage.getItem('get');
+    if(get == undefined){
+        get = "{}";
+    }
     get = JSON.parse(get);
     get[hourClicked] = userInput;
-   localStorage.setItem("get", JSON.stringify(get));
-   
+    localStorage.setItem("get", JSON.stringify(get));
+
 });
