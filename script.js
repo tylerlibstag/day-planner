@@ -87,12 +87,6 @@ $(document).on('click', '.saveBtn', function (event) {
     userInput = $('#' + hourClicked).val();
 
 
-    var get = localStorage.getItem('get');
-    if(get == undefined){
-        get = "{}";
-    }
-    get = JSON.parse(get);
-    get[hourClicked] = userInput;
-    localStorage.setItem("get", JSON.stringify(get));
+    localStorage.setItem("get", JSON.stringify(userInput));
 
 });
