@@ -66,6 +66,7 @@ function timeSlot(p) {
 
 function getDescriptionForTimeSlot(day, hour) {
     var storage = localStorage.getItem('get');
+    console.log("getter", storage);
     if (storage == undefined){
         return '';
     }
